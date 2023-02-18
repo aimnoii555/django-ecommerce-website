@@ -1,0 +1,90 @@
+{% extends 'myapp/base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+<div class="container">
+    <h3>ข้อมูลการจัดส่ง</h3>
+    <p>
+        Order ID: {{order.orderid}} <br>
+        ชื่อผู้รับ: {{order.name}} <br>
+    
+        เบอร์โทรศัพท์: {{order.tel}} <br>
+  
+        ที่อยู่จัดส่ง: {{order.address}} <br>
+     
+        {% if order.shipping == 'ems' %}
+            รูปแบบการส่ง: EMS
+        {% else %}
+            รูปแบบการส่ง: ลงทะเบียน
+        {% endif %}
+        <br>
+ 
+        {% if order.payment == 'transfer' %}
+            โอนเงินผ่านบัญชีธนาคาร
+        {% else %}
+            ชำระเงินปลายทาง
+        {% endif %}
+        <br>
+        หมายเหตุ: {{other}} <br>
+        <hr>
+
+    </p>
+</div>
+
+        <div class="container">
+            <h3>รวมยอด</h3>         
+            <table class="table table-hover">
+              <thead>
+                <tr>
+               
+                  <th>รหัสสินค้า</th>
+                  <th>ชื่อสินค้า</th>
+                  <th style="text-align: right;">ราคา</th>
+                  <th style="text-align: right;">จำนวน</th>
+                  <th style="text-align: right;">รวมยอด</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {% for od in odlist %}
+                <tr>
+                  <td>{{od.productid}}</td>
+                  <td>{{od.productname}} </td>
+                  <td style="text-align: right;">{{od.price|intcomma}}</td>
+                  <td style="text-align: right;">{{od.quantity|intcomma}}</td>
+                  <td style="text-align: right;">{{od.total|intcomma}}</td>
+                  
+               
+                </tr>
+                {% endfor %}
+                <tr style="background-color: rgb(223, 224, 224);">
+                  <td><h4>Total</h4></td>
+                  <td></td>
+                  <td></td>
+                  <td style="text-align: right;"><h4>{{count|intcomma}}</h4></td>
+                  <td style="text-align: right;"><h4>{{total|intcomma}} บาท</h4></td>
+                </tr>
+
+              </tbody>
+        
+            </table>
+            <br>
+            <p>ค่าส่ง: {{order.shipcost|intcomma}} บาท</p>
+            <h3>รวมยอดโอนทั้งหมด: {{total|add:order.shipcost|intcomma}} บาท</h3>
+           
+            <h6 style="color: red;">โอนเงินผ่านทางบัญชีนี้แล้วแจ้งการโอนสลิปด้วย</h6>
+            <p>
+                ธนาคาร: กรุงไทย <br>
+                หมายเลขบัญชี: 0000000000 <br>
+                ชื่อบัญชี: สุขสันต์ เชยชม <br>
+่                   <br>
+                ธนาคาร: กสิกรไทย <br>
+                หมายเลขบัญชี: 1111111111 <br>
+                ชื่อบัญชี: สุขสันต์ เชยชม <br>
+                
+            </p>
+   
+          </div>
+
+{% endblock content %}

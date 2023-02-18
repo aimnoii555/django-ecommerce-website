@@ -1,0 +1,114 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+    <h3>สินค้าแนะนำของร้าน</h3>
+    <p>ตอนนี้เรามีสินค้าให้เลือกหลายรายการ</p>
+  <div class="container-fluid">
+        <div class="row">
+
+            {% for pd in product %}
+                <div>
+                  <div class="col-sm-4">
+                    <div class="card" style="width: 300px; height: 530px;">
+                        {% if pd.image %}
+                         <!--รูปมาจาก Folder-->
+                              <img class="card-img-top" width="300"  style="width: 200px; height: 200px; overflow: hidden;" src="{{ pd.image.url }}">
+                          {% elif pd.imageurl !=  None %}
+                          <!--รูปมาจาก URl-->
+                             <img class="card-img-top" width="300" style="width: 200px; height: 200px; overflow: hidden;" src="{{ pd.imageurl }}">
+                          {% else %}
+                           <!--ถ้าไม่มีรูปภาพ-->
+                              <img src="/media/default.png" width="300" style="width: 200; height: 200px; overflow: hidden;">
+                          {% endif %}
+                          <div class="card-body">
+
+                              <h1 class="card-title">{{ pd.name }}</h1>
+                              <p>ราคา {{ pd.price }} บาท/{{ pd.unit}}</p>
+
+                              <p>รายละเอีด {{ pd.detail|linebreaks|truncatechars_html:50 }}</p>
+
+
+                              {% if pd.quantity > 0 %}
+
+                                    <p>สินค้าคงเหลือ: {{ pd.quantity }} {{ pd.unit }}</p>
+                              {% else %}
+                                    <font color="red">สินค้าหมดสต็อก กรูณาติดต่อเรา</font><p></p>
+                              {% endif %}
+
+
+                              {% if pd.instock == True %}
+
+                                    <a href="#" class="btn btn-primary">สั่งซื้อสินค้า</a>
+
+                              {% else %}
+
+                                    <a href="#" class="btn btn-warning">สินค้าหมด</a>
+
+                              {% endif %}
+
+                        </div>
+                  </div>
+                      <br><br>
+                </div>
+            </div>
+            {% endfor%}
+      </div>
+  </div>
+
+  <div class="container">
+        <center><a href="{% url 'allproduct-page'  %}"><h1>ดูสินค้าทั้งหมดของเรา</h1></a></center>
+        <hr>
+      
+  </div>
+
+
+  <h3>สินค้าขายดี (ต้อง preorder)</h3>
+  <p>preorder ล่วงหน้า 20 วัน</p>
+<div class="container-fluid">
+      <div class="row">
+
+          {% for pd in preorder %}
+              <div>
+                <div class="col-sm-4">
+                  <div class="card" style="width: 300px; height: 530px;">
+                      {% if pd.image %}
+                       <!--รูปมาจาก Folder-->
+                            <img class="card-img-top" width="300"  style="width: 200px; height: 200px; overflow: hidden;" src="{{ pd.image.url }}">
+                        {% elif pd.imageurl !=  None %}
+                        <!--รูปมาจาก URl-->
+                           <img class="card-img-top" width="300" style="width: 200px; height: 200px; overflow: hidden;" src="{{ pd.imageurl }}">
+                        {% else %}
+                         <!--ถ้าไม่มีรูปภาพ-->
+                            <img src="/media/default.png" width="300" style="width: 200; height: 200px; overflow: hidden;">
+                        {% endif %}
+
+                        <div class="card-body">
+                            <h1 class="card-title">{{ pd.name }}</h1>
+                            <p>ราคา {{ pd.price }} บาท/{{ pd.unit}}</p>
+
+                            <p>รายละเอีด {{ pd.detail|linebreaks|truncatechars_html:50 }}</p>
+
+
+                            {% if pd.quantity > 0 %}
+
+                                  <p>สินค้าคงเหลือใน Stock: {{ pd.quantity }} {{ pd.unit }}</p>
+                            {% else %}
+                                  <p><font color="red">สินค้าหมดแล้ว Pre Order</font></p>
+                                  <a href="#" class="btn btn-warning">Pre-Order</a>
+
+                            {% endif %}
+
+                      </div>
+                </div>
+                    <br><br>
+              </div>
+          </div>
+          {% endfor%}
+    </div>
+</div>
+
+
+{% endblock content %}
+
+
+

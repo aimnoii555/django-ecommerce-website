@@ -1,0 +1,50 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+  <div class="container" style="margin-bottom: 50px">
+    <h2>เพิ่มสินค้าในระบบ</h2>
+    <p>สามารถเพิ่มสินค้าในระบบได้ (เฉพาะแอดมิน)</p>
+    <form method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">ชื่อสินค้า:</label>
+        <input type="text" required class="form-control" id="name" name="name">
+      </div>
+
+       <div class="form-group">
+        <label for="price">ราคาสินค้า:</label>
+        <input type="text" required class="form-control" id="price" name="price">
+      </div>
+
+
+      <div class="form-group">
+            <label for="detail">รายละเอียดสินค้า:</label>
+            <textarea required class="form-control" rows="5" id="  detail" name="detail"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="imageurl">URL รูปภาพสินค้า:</label>
+        <input type="text"  class="form-control" id="imageurl" name="imageurl">
+      </div>
+
+      <div class="form-group">
+        <label for="quantity">จำนวนสินค้า</label>
+        <input type="text" required name="quantity" id="quantity" class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label for="unit">หน่วยสินค้า</label>
+        <input type="text" required class="form-control" id="unit" name="unit">
+      </div>
+
+        <div class="form-group">
+        <label for="imageupload">อัพโหลดรูปภาพ</label>
+        <input type="file" required class="form-control" id="imageupload" name="imageupload">
+      </div>
+
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+  </div>
+
+{% endblock content %}

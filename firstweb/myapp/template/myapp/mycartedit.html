@@ -1,0 +1,61 @@
+{% extends 'myapp/base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+{% if status == 'delete' %}
+    <div class="alert alert-danger">
+        <strong>ลบสินค้าเรียบร้อยแล้ว!!</strong>
+    </div>
+{% endif %}
+
+        <div class="container">
+            <h3>แก้ไขข้อมูลในตะกร้า</h3>
+            <p>สามารถแก้ไขข้อมูลในตะกร้าได้</p>        
+        <form action="" method="post" id="formsave"> 
+                {% csrf_token %}
+            <table class="table table-hover">
+              <thead>
+                <tr>
+             
+                  <th>รหัสสินค้า</th>
+                  <th>ชื่อสินค้า</th>
+                  <th>ราคา</th>
+                  <th>จำนวน</th>
+                  <th>ลบ</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for pd in mycart %}
+                <tr>
+        
+                  <td>{{pd.productid}}</td>
+                  <td>{{pd.productname}} </td>
+                  <td>{{pd.price|intcomma}}</td>
+                  <td><input type="number" class="form-control" style="width: 80px;" name="pd_{{pd.productid}}" value="{{pd.quantity}}"></td>
+                  
+                  <th>
+                      -
+                  </th>
+
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+                <input type="hidden" name="checksave" value="checksave">
+        </form>
+
+            <div class="row">
+
+                <button type="submit" form="formsave" class="btn btn-success">บันทึก</button>
+                <div style="padding: 5px;"></div>
+                <form action="" method="post" id="formclear" onsubmit="return confirm('ยืนยันการลบสินค้าทั้งหมดหรือไม่?')">
+                    {% csrf_token %}
+                     <input type="hidden" name="clear" value="clear">
+                     <button type="submit" form="formclear" class="btn btn-danger">ลบสินค้าทั้งหมดในตะกร้า</button>
+                 </form>
+            </div>
+          </div>
+
+
+{% endblock content %}

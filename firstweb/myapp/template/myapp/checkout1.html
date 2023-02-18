@@ -1,0 +1,66 @@
+{% extends 'myapp/base.html' %}
+
+{% block content %}
+
+  <div class="container" style="margin-bottom: 50px">
+    <h2>ข้อมูลการจัดส่ง</h2>
+    <p>กรุณากรอกข้อมูลการจัดส่งสินค้า</p>
+    <form method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="name">ชื่อ-สกุล:</label>
+        <input type="text" required class="form-control" id="name" name="name">
+      </div>
+
+      <div class="form-group">
+        <label for="tel">เบอร์โทรศัพท์:</label>
+        <input type="text" required class="form-control" id="tel" name="tel">
+      </div>
+
+      <div class="form-group">
+            <label for="address">ที่อยู่จัดส่ง:</label>
+            <textarea class="form-control" name="address" id="address" cols="30" rows="5"></textarea>
+      </div>
+
+      <hr>
+      <label for="">เลือกประเภทการจัดส่ง</label>
+
+      <div class="form-check">
+            <label for="ems" class="form-check-label">
+                <input type="radio" name="shipping" id="ems" value="ems"> EMS (50 บาท)
+            </label>
+      </div>
+   
+      <div class="form-check">
+        <label for="register" class="form-check-label">
+            <input type="radio" name="shipping" id="register" value="register"> ลงทะเบียน (50 บาท)
+        </label>
+      </div>
+
+      <hr>
+      <label for="">การชำระเงิน</label>
+
+      <div class="form-check">
+        <label for="transfer" class="form-check-label">
+            <input type="radio" name="payment" id="transfer" value="transfer"> โอนเงินผ่านบัญชีธนาคาร
+        </label>
+      </div>
+
+      <div class="form-check">
+        <label for="cod" class="form-check-label">
+            <input type="radio" name="payment" id="cod" value="cod"> เก็บเงินปลายทาง
+        </label>
+      </div>
+
+
+      <div class="form-group">
+        <label for="other">หมายเหตุ:</label>
+        <textarea class="form-control" name="other" id="other" cols="30" rows="5" placeholder="ฝากข้อความถึงผู้ขาย"></textarea>
+      </div>
+
+      <input type="hidden" name="page" value="information">
+      <button type="submit" class="btn btn-primary">ตกลง</button>
+    </form>
+  </div>
+
+{% endblock content %}
